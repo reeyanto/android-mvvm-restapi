@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
         // ambil pesan error
         studentViewModel.getErrorMessage().observe(this, errorMessage -> {
             Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show();
+            pbProgress.setVisibility(View.GONE);
         });
     }
 }

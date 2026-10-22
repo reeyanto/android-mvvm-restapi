@@ -12,7 +12,7 @@ import retrofit2.Response;
 
 public class StudentRepository {
 
-    private ApiService apiService;
+    private final ApiService apiService;
 
     public StudentRepository() {
         apiService = ApiClient.getClient().create(ApiService.class);
@@ -24,19 +24,19 @@ public class StudentRepository {
     }
 
     public void fetchStudent(StudentCallback callback) {
-        apiService.getStudents().enqueue(new Callback<List<Student>>() {
+        apiService.getStudents().enqueue(new Callback<>() {
             @Override
             public void onResponse(Call<List<Student>> call, Response<List<Student>> response) {
-                if(response.isSuccessful() && response.body() != null) {
+                if (response.isSuccessful() && response.body() != null) {
                     callback.onSuccess(response.body());
                 } else {
-                    callback.onError("Gagal memuat data: "+ response.message());
+                    callback.onError("Gagal memuat data: " + response.message());
                 }
             }
 
             @Override
             public void onFailure(Call<List<Student>> call, Throwable t) {
-                callback.onError("Terjadi kesalahan jaringan: "+ t.getMessage());
+                callback.onError("Terjadi kesalahan jaringan: " + t.getMessage());
             }
         });
     }
